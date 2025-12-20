@@ -14,7 +14,7 @@ namespace ChameRozAP.ServiceManager
         public dbInfoTodayChame GetTodayChame()
         {
             using var db = new CL_DBcontextAP();
-            db.Database.EnsureCreated();
+            
 
 
             var totalCount = db.ChameRoz.Count();
@@ -45,7 +45,7 @@ namespace ChameRozAP.ServiceManager
         public dbInfoTodayChame GetYesterdaysChame()
         {
             using var db = new CL_DBcontextAP();
-            db.Database.EnsureCreated();
+            
 
 
             var lastPoem = db.ChameRozToday

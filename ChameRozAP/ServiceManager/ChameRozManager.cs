@@ -12,6 +12,8 @@ namespace ChameRozAP.ServiceManager
     {
         public void Start()
         {
+         
+
             if (!IsTodayChameAvailable())
             {
                 return;

@@ -6,3 +6,5 @@ ChameRozManager chameRoz = new ChameRozManager();
 
 chameRoz.Start();
 
+Console.ReadLine();
+
