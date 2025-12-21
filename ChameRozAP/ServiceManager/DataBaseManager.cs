@@ -33,28 +33,29 @@ namespace ChameRozAP.ServiceManager
             var NewInfoTodayChame = new dbInfoTodayChame
             {
                 id = nextId,
-                chameRoz = selectedChame,
+                ChameID = selectedChame.ChameID,
                 DateTime = DateTime.Now
             };
             db.ChameRozToday.Add(NewInfoTodayChame);
             db.SaveChanges();
+
+            NewInfoTodayChame.chameRoz = selectedChame;
             return NewInfoTodayChame;
 
         }
 
-        public dbInfoTodayChame GetYesterdaysChame()
+        public dbInfoTodayChame? GetYesterdaysChame()
         {
             using var db = new CL_DBcontextAP();
-            
-
 
             var lastPoem = db.ChameRozToday
+                .Include(p => p.chameRoz)
                 .OrderByDescending(p => p.id)
                 .FirstOrDefault();
 
             if (lastPoem == null)
             {
-                return new dbInfoTodayChame();
+                return null;
             }
 
             return lastPoem;
@@ -89,7 +90,7 @@ namespace ChameRozAP.ServiceManager
         public int ChameID { get; set; }
 
         [ForeignKey("ChameID")]
-        public dbChameRoz chameRoz { get; set; }
+        public virtual dbChameRoz chameRoz { get; set; }
 
         public DateTime DateTime { get; set; }
 
@@ -108,13 +109,21 @@ namespace ChameRozAP.ServiceManager
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Data Source=ChameRozAPdb.db");
+                string dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ChameRozAPdb.db");
+                optionsBuilder.UseSqlite($"Data Source={dbPath}");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<dbChameRoz>()
+                .ToTable("ChameRoz")
+                .HasKey(e => e.ChameID);
+            
+            modelBuilder.Entity<dbInfoTodayChame>()
+                .HasOne(t => t.chameRoz)
+                .WithMany()
+                .HasForeignKey(h => h.ChameID);
         }
     }
 }

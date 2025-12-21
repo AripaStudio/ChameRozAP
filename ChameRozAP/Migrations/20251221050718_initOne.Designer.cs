@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChameRozAP.Migrations
 {
     [DbContext(typeof(CL_DBcontextAP))]
-    [Migration("20251220162939_init")]
-    partial class init
+    [Migration("20251221050718_initOne")]
+    partial class initOne
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,7 @@ namespace ChameRozAP.Migrations
 
                     b.HasKey("ChameID");
 
-                    b.ToTable("ChameRoz");
+                    b.ToTable("ChameRoz", (string)null);
                 });
 
             modelBuilder.Entity("ChameRozAP.ServiceManager.dbInfoTodayChame", b =>

@@ -12,26 +12,29 @@ namespace ChameRozAP.ServiceManager
     {
         public void Start()
         {
-         
 
-            if (!IsTodayChameAvailable())
+
+            if (IsTodayChameAvailable())
             {
+                
                 return;
+                
             }
             else
             {
+                
                 if (IsInternetAvailable())
                 {
                     GitManager gitManager = new GitManager();
-                    DataBaseManager dbM =new DataBaseManager();
+                    DataBaseManager dbM = new DataBaseManager();
                     var chameYesterdays = dbM.GetYesterdaysChame();
                     var ChameToday = dbM.GetTodayChame();
-                    gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame:ChameToday);
+                    gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
                 }
                 else
                 {
                     ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
-                    
+
                 }
             }
         }

@@ -11,11 +11,11 @@ namespace ChameRozAP.ServiceManager
         public static void ShowMessageBoxAP(string message , string title)
         {
             string command =
-                $"Add-Type -AssemblyName PresentationFramework; [System.Windows.MessageBox]::Show({message} , {title})";
+                $"Add-Type -AssemblyName PresentationFramework; [System.Windows.MessageBox]::Show('{message}' , '{title}')";
             var processInfo = new System.Diagnostics.ProcessStartInfo
             {
                 FileName = "powershell",
-                Arguments = command,
+                Arguments = $"-Command \"{command}\"",
                 CreateNoWindow = true,
                 UseShellExecute = false
             };

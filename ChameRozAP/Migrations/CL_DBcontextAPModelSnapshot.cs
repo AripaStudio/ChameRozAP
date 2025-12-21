@@ -37,7 +37,7 @@ namespace ChameRozAP.Migrations
 
                     b.HasKey("ChameID");
 
-                    b.ToTable("ChameRoz");
+                    b.ToTable("ChameRoz", (string)null);
                 });
 
             modelBuilder.Entity("ChameRozAP.ServiceManager.dbInfoTodayChame", b =>

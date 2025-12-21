@@ -21,18 +21,23 @@ namespace ChameRozAP.ServiceManager
             ExecuteCommand("git push");
         }
 
-        private void AddHistory(dbInfoTodayChame YesterdaysChame)
+        private void AddHistory(dbInfoTodayChame? YesterdaysChame)
         {
             if (string.IsNullOrEmpty(PathProject))
             {
                 return;
             }
-
             var historyFolderPath = Path.Combine(PathProject, "History");
             if (!Directory.Exists(historyFolderPath))
             {
                 Directory.CreateDirectory(historyFolderPath);
             }
+            if (YesterdaysChame == null || YesterdaysChame.chameRoz == null)
+            {
+
+                return;
+            }
+          
             var fileName = $"{YesterdaysChame.DateTime:yyyy-MM-dd}.md";
             var newFile = Path.Combine(historyFolderPath, fileName);
             File.WriteAllText(newFile, YesterdaysChame.chameRoz.ChameText + Environment.NewLine + YesterdaysChame.chameRoz.PoetName);

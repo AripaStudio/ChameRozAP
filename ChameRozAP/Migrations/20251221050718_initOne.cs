@@ -6,11 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ChameRozAP.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class initOne : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ChameRoz",
+                columns: table => new
+                {
+                    ChameID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PoetName = table.Column<string>(type: "TEXT", nullable: false),
+                    CategoryName = table.Column<string>(type: "TEXT", nullable: false),
+                    ChameText = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChameRoz", x => x.ChameID);
+                });
 
             migrationBuilder.CreateTable(
                 name: "ChameRozToday",

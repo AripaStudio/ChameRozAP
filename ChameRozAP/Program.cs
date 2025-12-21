@@ -2,9 +2,17 @@
 
 using ChameRozAP.ServiceManager;
 
-ChameRozManager chameRoz = new ChameRozManager();
+try
+{
+    ChameRozManager chameRoz = new ChameRozManager();
 
-chameRoz.Start();
+    chameRoz.Start();
 
-Console.ReadLine();
+    Console.ReadLine();
 
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.ToString());
+    Console.ReadLine();
+}
