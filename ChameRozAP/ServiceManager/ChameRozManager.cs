@@ -16,26 +16,26 @@ namespace ChameRozAP.ServiceManager
 
             if (IsTodayChameAvailable())
             {
-                
+
                 return;
-                
+
             }
             else
             {
-                
-                if (IsInternetAvailable())
-                {
-                    GitManager gitManager = new GitManager();
-                    DataBaseManager dbM = new DataBaseManager();
-                    var chameYesterdays = dbM.GetYesterdaysChame();
-                    var ChameToday = dbM.GetTodayChame();
-                    gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
-                }
-                else
+
+                while (!IsInternetAvailable())
                 {
                     ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
 
+                    Thread.Sleep(300000);
                 }
+
+
+                GitManager gitManager = new GitManager();
+                DataBaseManager dbM = new DataBaseManager();
+                var chameYesterdays = dbM.GetYesterdaysChame();
+                var ChameToday = dbM.GetTodayChame();
+                gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
             }
         }
 

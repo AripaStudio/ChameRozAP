@@ -40,7 +40,18 @@ namespace ChameRozAP.ServiceManager
           
             var fileName = $"{YesterdaysChame.DateTime:yyyy-MM-dd}.md";
             var newFile = Path.Combine(historyFolderPath, fileName);
-            File.WriteAllText(newFile, YesterdaysChame.chameRoz.ChameText + Environment.NewLine + YesterdaysChame.chameRoz.PoetName);
+            string textReadme = $@"# 🖋️ چامه امروز
+> هر روز چامه نو بر این جا گذاشته می‌شود. برای دیدن چامه‌های گذشته به پوشه **History** بروید.
+
+---
+
+### {YesterdaysChame.chameRoz.PoetName}
+{YesterdaysChame.chameRoz.ChameText.Replace("\n", "  \n")}
+
+---
+**📅 تاریخ:** {YesterdaysChame.DateTime:yyyy-MM-dd}";
+
+            File.WriteAllText(newFile, textReadme);
 
             ExecuteCommand("git add .");
             ExecuteCommand("git commit -m \"Update History Chame\"");
