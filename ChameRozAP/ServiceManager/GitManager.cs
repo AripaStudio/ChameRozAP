@@ -59,8 +59,17 @@ namespace ChameRozAP.ServiceManager
                 return;
             }
 
-            string TextReadme = "#چامه امروز - هر روز چامه نو بر این جا گذاشته میشود - برای دیدن چامه های گذشته به پوشه history بروید." + Environment.NewLine + todayChame.chameRoz.ChameText + Environment.NewLine + todayChame.chameRoz.PoetName + Environment.NewLine + todayChame.DateTime.ToLongDateString();
-            File.WriteAllText(readmePath, TextReadme);
+            string textReadme = $@"# 🖋️ چامه امروز
+> هر روز چامه نو بر این جا گذاشته می‌شود. برای دیدن چامه‌های گذشته به پوشه **History** بروید.
+
+---
+
+### {todayChame.chameRoz.PoetName}
+{todayChame.chameRoz.ChameText.Replace("\n", "  \n")}
+
+---
+**📅 تاریخ:** {todayChame.DateTime:yyyy-MM-dd}";
+            File.WriteAllText(readmePath, textReadme);
 
             ExecuteCommand("git add .");
             ExecuteCommand("git commit -m \"Update Daily Chame\"");
