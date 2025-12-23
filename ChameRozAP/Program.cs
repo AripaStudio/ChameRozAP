@@ -4,15 +4,16 @@ using ChameRozAP.ServiceManager;
 
 try
 {
+    
     ChameRozManager chameRoz = new ChameRozManager();
 
     chameRoz.Start();
 
-    Console.ReadLine();
+    Console.ReadKey();
 
 }
 catch (Exception e)
 {
-    Console.WriteLine(e.ToString());
-    Console.ReadLine();
+    ShowMessageAP.ShowMessageBoxAP(e.Message , "debug");
+    Console.ReadKey();
 }

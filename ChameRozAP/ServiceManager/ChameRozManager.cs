@@ -3,40 +3,69 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using static System.Net.Mime.MediaTypeNames;
+using Timer = System.Timers.Timer;
 
 namespace ChameRozAP.ServiceManager
 {
     public class ChameRozManager
     {
+        private Timer timer = new Timer();
         public void Start()
         {
 
 
             if (IsTodayChameAvailable())
             {
-
-                return;
+                var TimeRemaining = GetTimeRemainingUntil();
+                ShowMessageAP.ShowMessageBoxAP("A poem has been posted for today, the next poem in time: Hours : " + TimeRemaining.Hours + " Minutes : " + TimeRemaining.Minutes, "ChameRozAP");
+                timer.Interval = TimeRemaining.TotalMilliseconds;
+                timer.AutoReset = false;
+                timer.Elapsed += TimerOnElapsed;
+                timer.Start();
 
             }
             else
             {
-
-                while (!IsInternetAvailable())
-                {
-                    ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
-
-                    Thread.Sleep(300000);
-                }
-
-
-                GitManager gitManager = new GitManager();
-                DataBaseManager dbM = new DataBaseManager();
-                var chameYesterdays = dbM.GetYesterdaysChame();
-                var ChameToday = dbM.GetTodayChame();
-                gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
+                StartWork();
             }
+
+
+
+            
+
+        }
+
+        private void TimerOnElapsed(object? sender, ElapsedEventArgs e)
+        {
+            if (sender is Timer t)
+            {
+                t.Stop();
+                t.Elapsed -= TimerOnElapsed;
+                t.Dispose();
+            }
+            StartWork();
+        }
+
+        private void StartWork()
+        {
+            while (!IsInternetAvailable())
+            {
+                ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
+
+                Thread.Sleep(300000);
+            }
+
+            GitManager gitManager = new GitManager();
+            DataBaseManager dbM = new DataBaseManager();
+            var chameYesterdays = dbM.GetYesterdaysChame();
+            var ChameToday = dbM.GetTodayChame();
+            gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
+
         }
 
         private bool IsTodayChameAvailable()
@@ -45,7 +74,7 @@ namespace ChameRozAP.ServiceManager
             return db.ChameRozToday.Any(c => c.DateTime.Date == DateTime.Today);
         }
 
-        public bool IsInternetAvailable()
+        private bool IsInternetAvailable()
         {
             try
             {
@@ -58,5 +87,16 @@ namespace ChameRozAP.ServiceManager
                 return false;
             }
         }
+
+
+        private TimeSpan GetTimeRemainingUntil()
+        {
+            var GetNowDate = DateTime.Now;
+            var tomrrow = GetNowDate.Date.AddDays(1);
+            return tomrrow - GetNowDate;
+        }
+
+
+
     }
 }
