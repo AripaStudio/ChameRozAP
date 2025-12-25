@@ -48,6 +48,7 @@ namespace ChameRozAP.ServiceManager
                 t.Elapsed -= TimerOnElapsed;
                 t.Dispose();
             }
+            ShowMessageAP.ShowMessageBoxAP("A new poem was posted.", "ChameRozAP");
             StartWork();
         }
 
