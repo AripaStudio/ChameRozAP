@@ -48,7 +48,6 @@ namespace ChameRozAP.ServiceManager
                 t.Elapsed -= TimerOnElapsed;
                 t.Dispose();
             }
-            ShowMessageAP.ShowMessageBoxAP("A new poem was posted.", "ChameRozAP");
             StartWork();
         }
 
@@ -66,6 +65,7 @@ namespace ChameRozAP.ServiceManager
             var chameYesterdays = dbM.GetYesterdaysChame();
             var ChameToday = dbM.GetTodayChame();
             gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
+            ShowMessageAP.ShowMessageBoxAP("A new poem was posted.", "ChameRozAP");
 
         }
 
