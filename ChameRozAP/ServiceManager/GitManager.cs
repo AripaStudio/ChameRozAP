@@ -11,8 +11,6 @@ namespace ChameRozAP.ServiceManager
 {
     public class GitManager
     {
-
-        //کامل کردن این بخش و تست کردن این بخش ها تا زمانی که نت ها درست بشه 
         private string? PathProject;
         public GitManager()
         {
@@ -31,8 +29,6 @@ namespace ChameRozAP.ServiceManager
             else
             {
                 ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
-
-                Thread.Sleep(300000);
             }
             
         }
