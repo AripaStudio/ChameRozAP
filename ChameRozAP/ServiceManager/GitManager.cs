@@ -41,9 +41,7 @@ namespace ChameRozAP.ServiceManager
 
             var LastPoem = AripaTools.GetNameAndTimeSpanOfLastCreatedFiles(HistoryFolderAddress);
             LastPoem.TimeSpanFile *= -1;
-            ShowMessageAP.ShowMessageBoxAP($"CheckPastPoem  , TimeSpan : {LastPoem.TimeSpanFile.Days} --- Name : {LastPoem.NameFile}" , "Debug");
             int Days = LastPoem.TimeSpanFile.Days ;
-            ShowMessageAP.ShowMessageBoxAP($"Show Days in CheckPastPoem : {Days.ToString()}", "Debug");
             if (Days > 0)
             {
                 for (int i = 0; i < Days; i++)
