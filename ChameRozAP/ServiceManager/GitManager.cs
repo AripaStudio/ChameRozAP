@@ -40,14 +40,18 @@ namespace ChameRozAP.ServiceManager
             string HistoryFolderAddress = CreateHistoryFolderAndGetAddress();
 
             var LastPoem = AripaTools.GetNameAndTimeSpanOfLastCreatedFiles(HistoryFolderAddress);
-            int Days = LastPoem.TimeSpanFile.Days - 1;
-            if (Days < 0)
+            LastPoem.TimeSpanFile *= -1;
+            ShowMessageAP.ShowMessageBoxAP($"CheckPastPoem  , TimeSpan : {LastPoem.TimeSpanFile.Days} --- Name : {LastPoem.NameFile}" , "Debug");
+            int Days = (LastPoem.TimeSpanFile.Days ) - 1;
+            ShowMessageAP.ShowMessageBoxAP($"Show Days in CheckPastPoem : {Days.ToString()}", "Debug");
+            if (Days > 0)
             {
                 for (int i = 0; i < Days; i++)
                 {
                     DataBaseManager dbM = new DataBaseManager();
                     var PastDateTime = DateTime.Now.Date.AddDays(-i);
                     AddHistory(dbM.CreateNewChame(PastDateTime));
+                    ShowMessageAP.ShowMessageBoxAP($"New Poem Date : {PastDateTime.ToString()}" , "Debug");
 
                 }
             }
