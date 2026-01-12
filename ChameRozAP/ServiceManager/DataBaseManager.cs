@@ -11,10 +11,10 @@ namespace ChameRozAP.ServiceManager
 {
     public class DataBaseManager
     {
-        public dbInfoTodayChame GetTodayChame()
+        public dbInfoTodayChame CreateNewChame(DateTime dateTime)
         {
             using var db = new CL_DBcontextAP();
-            
+
 
 
             var totalCount = db.ChameRoz.Count();
@@ -34,7 +34,7 @@ namespace ChameRozAP.ServiceManager
             {
                 id = nextId,
                 ChameID = selectedChame.ChameID,
-                DateTime = DateTime.Now
+                DateTime = dateTime
             };
             db.ChameRozToday.Add(NewInfoTodayChame);
             db.SaveChanges();
@@ -42,6 +42,10 @@ namespace ChameRozAP.ServiceManager
             NewInfoTodayChame.chameRoz = selectedChame;
             return NewInfoTodayChame;
 
+        }
+        public dbInfoTodayChame GetTodayChame()
+        {
+            return CreateNewChame(DateTime.Now);
         }
 
         public dbInfoTodayChame? GetYesterdaysChame()

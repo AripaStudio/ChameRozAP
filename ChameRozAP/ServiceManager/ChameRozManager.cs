@@ -22,6 +22,8 @@ namespace ChameRozAP.ServiceManager
             if (IsTodayChameAvailable())
             {
                 var TimeRemaining = GetTimeRemainingUntil();
+                var gitManager = new GitManager();
+                gitManager.CheckPastPoem();
                 ShowMessageAP.ShowMessageBoxAP("A poem has been posted for today, the next poem in time: Hours : " + TimeRemaining.Hours + " Minutes : " + TimeRemaining.Minutes, "ChameRozAP");
                 timer.Interval = TimeRemaining.TotalMilliseconds;
                 timer.AutoReset = false;
@@ -53,18 +55,12 @@ namespace ChameRozAP.ServiceManager
 
         private void StartWork()
         {
-            while (!IsInternetAvailable())
-            {
-                ShowMessageAP.ShowMessageBoxAP("The internet is off, turn it on.", "ChameRozAP");
-
-                Thread.Sleep(300000);
-            }
 
             GitManager gitManager = new GitManager();
             DataBaseManager dbM = new DataBaseManager();
             var chameYesterdays = dbM.GetYesterdaysChame();
             var ChameToday = dbM.GetTodayChame();
-            gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday);
+            gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday , IsInternetValid:IsInternetAvailable());
             ShowMessageAP.ShowMessageBoxAP("A new poem was posted.", "ChameRozAP");
 
         }
