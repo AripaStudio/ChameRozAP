@@ -61,6 +61,7 @@ namespace ChameRozAP.ServiceManager
             var chameYesterdays = dbM.GetYesterdaysChame();
             var ChameToday = dbM.GetTodayChame();
             gitManager.add_history_chame_commit(YesterdaysChame: chameYesterdays, TodayChame: ChameToday , IsInternetValid:IsInternetAvailable());
+            ShowMessageAP.ShowMessageBoxAP($" چکامه  : {ChameToday.chameRoz.ChameText} " , $"{ChameToday.chameRoz.PoetName}");
             ShowMessageAP.ShowMessageBoxAP("A new poem was posted.", "ChameRozAP");
 
         }

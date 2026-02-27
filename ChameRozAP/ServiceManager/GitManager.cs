@@ -41,7 +41,7 @@ namespace ChameRozAP.ServiceManager
 
             var LastPoem = AripaTools.GetNameAndTimeSpanOfLastCreatedFiles(HistoryFolderAddress);
             LastPoem.TimeSpanFile *= -1;
-            int Days = LastPoem.TimeSpanFile.Days ;
+            int Days = LastPoem.TimeSpanFile.Days;
             if (Days > 0)
             {
                 for (int i = 0; i < Days; i++)
